@@ -4,6 +4,7 @@
 #include <sourcemod>
 #include <sdktools>
 #include <dhooks>
+#include <clientprefs>
 
 #pragma semicolon 1
 #pragma newdecls required
@@ -13,6 +14,9 @@
 #define GAMEDATA_CREATEMESSAGE "CPluginHelpersCheck::CreateMessage"
 
 ConVar urlCvar;
+ConVar limitCvar;
+ConVar resetCvar;
+Cookie counterCookie;
 
 public void OnPluginStart()
 {
@@ -47,7 +51,10 @@ public void OnPluginStart()
 		SetFailState("Could not hook %s", GAMEDATA_CREATEMESSAGE);
 
 
-	urlCvar = CreateConVar("plugin_messages_assist_url", "https://alienmario.github.io/plugin-messages-assist/", "URL of the MOTD shown to players with plugin messages turned off");
+	urlCvar = CreateConVar("plugin_messages_assist_url", "https://alienmario.github.io/plugin-messages-assist/", "URL of the MOTD shown to players with plugin messages turned off.");
+	limitCvar = CreateConVar("plugin_messages_assist_limit", "2", "How many times to show the assist MOTD.", _, true, 0.0);
+	resetCvar = CreateConVar("plugin_messages_assist_reset", "604800", "Duration in seconds, from the last time the MOTD was shown, after which to reset the 'times shown' counter. -1 disables resets. Default is a week.");
+	counterCookie = new Cookie("pma_counter", "plugin-messages-assist counter", CookieAccess_Private);
 }
 
 public MRESReturn Hook_CreateMessage(DHookReturn hReturn, DHookParam hParams)
@@ -67,6 +74,25 @@ public void QueryFinished(QueryCookie cookie, int client, ConVarQueryResult resu
 	{
 		if (cvarValue[0] == '0')
 		{
+			if (AreClientCookiesCached(client))
+			{
+				char buffer[8];
+				int count;
+				int resetAfter = resetCvar.IntValue;
+				if (resetAfter < 0 || GetTime() < counterCookie.GetClientTime(client) + resetAfter)
+				{
+					// no reset atm
+					counterCookie.Get(client, buffer, sizeof(buffer));
+					count = StringToInt(buffer);
+				}
+				if (count >= limitCvar.IntValue)
+				{
+					return;
+				}
+				IntToString(++count, buffer, sizeof(buffer));
+				counterCookie.Set(client, buffer);
+			}
+
 			char msg[53], url[256];
 			switch (value)
 			{
