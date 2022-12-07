@@ -10,7 +10,7 @@
 				"linux"		"PluginHelpersCheck001"
 			}
 		}
-        "Signatures"
+		"Signatures"
 		{
 			"CreateServerInterface"
 			{
@@ -19,18 +19,18 @@
 				"linux"			"@CreateInterface"
 			}
 		}
-        "Offsets"
-        {
-            "CPluginHelpersCheck::CreateMessage"
+		"Offsets"
+		{
+			"CPluginHelpersCheck::CreateMessage"
 			{
 				"windows"	"0"
 				"linux"		"0"
 			}
-        }
-        "Functions"
-        {
-            // CPluginHelpersCheck::CreateMessage(char const*, edict_t*, DIALOG_TYPE, KeyValues*)
-            "CPluginHelpersCheck::CreateMessage"
+		}
+		"Functions"
+		{
+			// CPluginHelpersCheck::CreateMessage(char const*, edict_t*, DIALOG_TYPE, KeyValues*)
+			"CPluginHelpersCheck::CreateMessage"
 			{
 				"offset"	"CPluginHelpersCheck::CreateMessage"
 				"hooktype"	"raw"
@@ -56,6 +56,6 @@
 					}
 				}
 			}
-        }
-    }
+		}
+	}
 }
