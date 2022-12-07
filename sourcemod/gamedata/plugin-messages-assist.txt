@@ -1,0 +1,61 @@
+"Games"
+{
+	"#default"
+	{
+		"Keys"
+		{
+			"IPluginHelpersCheck"
+			{
+				"windows"	"PluginHelpersCheck001"
+				"linux"		"PluginHelpersCheck001"
+			}
+		}
+        "Signatures"
+		{
+			"CreateServerInterface"
+			{
+				"library"		"server"
+				"windows"		"@CreateInterface"
+				"linux"			"@CreateInterface"
+			}
+		}
+        "Offsets"
+        {
+            "CPluginHelpersCheck::CreateMessage"
+			{
+				"windows"	"0"
+				"linux"		"0"
+			}
+        }
+        "Functions"
+        {
+            // CPluginHelpersCheck::CreateMessage(char const*, edict_t*, DIALOG_TYPE, KeyValues*)
+            "CPluginHelpersCheck::CreateMessage"
+			{
+				"offset"	"CPluginHelpersCheck::CreateMessage"
+				"hooktype"	"raw"
+				"return"	"bool"
+				"this"		"ignore"
+				"arguments"
+				{
+					"plugin"
+					{
+						"type"	"charptr"
+					}
+					"pEntity"
+					{
+						"type"	"edict"
+					}
+					"type"
+					{
+						"type"	"int"
+					}
+					"data"
+					{
+						"type"	"objectptr"
+					}
+				}
+			}
+        }
+    }
+}
