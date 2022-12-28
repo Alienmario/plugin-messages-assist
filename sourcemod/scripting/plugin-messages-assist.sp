@@ -1,6 +1,3 @@
-// Purpose:
-// Detect menus/dialogs being sent, check player's setting, then open motd with a guide
-
 #include <sourcemod>
 #include <sdktools>
 #include <dhooks>
@@ -8,6 +5,14 @@
 
 #pragma semicolon 1
 #pragma newdecls required
+
+public Plugin myinfo = {
+	name = "Plugin messages assist",
+	author = "Alienmario",
+	description = "Detect menus/dialogs being sent, check player's setting, then open motd with a guide",
+	version = "1.0",
+	url = "https://github.com/Alienmario/plugin-messages-assist"
+};
 
 #define GAMEDATA               "plugin-messages-assist"
 #define GAMEDATA_PLUGINHELPERS "IPluginHelpersCheck"
